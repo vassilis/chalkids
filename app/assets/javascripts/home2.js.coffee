@@ -1,10 +1,11 @@
 
 
 $ ->
-	tiles = 50 # 10,20,30
+	tiles = 20 # 10,20,30
+	nums = _.shuffle([1..tiles])
 	$container = $('#container')
 
-	nums = _.shuffle([1..tiles])
+	$('#logo-text').lettering()
 
 	for i in [0..tiles-1]
 		n = nums[i].toString()
@@ -23,22 +24,25 @@ $ ->
 
 	$items.each ->
 		$el = $(this)
+		$target = $items.eq(eval($el.text()) - 1)
 		hue = Math.floor(Math.random() * 360)
 		$el.css
 			position: 'absolute'
 			left: $el.attr('data-x') + 'px'
 			top: $el.attr('data-y') + 'px'
-			background:  "hsl(" + hue + ", 60%, 50%)"
+			'background-color':  "hsl(" + hue + ", 60%, 50%)"
+			'background-position': '-' + $target.attr('data-x') + 'px -' + $target.attr('data-y') + 'px'
 		if eval($el.text()) == $el.index() + 1
-			$el.animate
-				opacity: 0
+			$el.addClass('checked').animate
+				opacity: 1
+				color: 'transparent'
 
-	$items.draggable({
+	$items.not('.checked').draggable({
 		revert: "invalid"
 		containment: "parent"
 	})
 
-	$items.droppable({
+	$items.not('.checked').droppable({
 		hoverClass: "drop-hover"
 		activate: ( event, ui ) ->
 			$item1 = $(ui.draggable)
@@ -76,9 +80,18 @@ $ ->
 					$item2.appendTo $item2.parent()
 
 				if eval($item1.text()) == $item1.index() + 1
-					$item1.animate
-						opacity: 0
+					$item1.addClass('checked').animate
+						opacity: 1
+						color: 'transparent'
+					$item1.droppable( "destroy" )
+					$item1.draggable( "destroy" )
 				if eval($item2.text()) == $item2.index() + 1
-					$item2.animate
-						opacity: 0
+					$item2.addClass('checked').animate
+						opacity: 1
+						color: 'transparent'
+					$item2.droppable( "destroy" )
+					$item2.draggable( "destroy" )
+
+				if $('.checked').length == tiles
+					$container.addClass 'completed'
 	})

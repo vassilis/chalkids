@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chalkids</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title>Chalkids</title>
+	<%= stylesheet_link_tag "application", :media => "all" %>
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+	<header>
+		<div id="logo">
+			<span id="logo-text">ChalKids</span>
+			<span id="slogan">
+				Στη Χαλκίδα δεν έχουμε πάρκα και παιδικές χαρές...
+			</span>
+		</div>
+	</header>
+	<%= yield %>
 </body>
 </html>

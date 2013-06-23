@@ -1,3 +1,93 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import url(http://fonts.googleapis.com/css?family=Chewy);
+@import url(http://fonts.googleapis.com/css?family=Aladin);
+@import "compass/css3";
+
+$green: #015F2A;
+
+body {
+	background: url('bg.jpg') $green;
+	margin-bottom: 500px;
+}
+
+.container-fluid {
+	width: 920px;
+	margin: 0 auto;
+}
+
+header {
+	text-align: center;
+	padding: 50px 0;
+}
+
+#logo {
+	text-align: center;
+	color: white;
+	@include inline-block;
+}
+
+#logo-text {
+	letter-spacing: 15px;
+	font: bold 6em/1 'Aladin', sans-serif;
+	.char2, .char5, .char8 {
+		color: #E36B23;
+		@include text-shadow(-4px 4px 0 #9B4D1F, 0 10px 10px #222);
+		@include rotate(3deg);
+		@include inline-block;
+	}
+	.char3, .char7 {
+		color: #E6C92E;
+		@include text-shadow(-4px 4px 0 #9C8B26, 0 10px 10px #222);
+		@include rotate(-3deg);
+		@include inline-block;
+	}
+	.char4, .char1, .char6 {
+		color :#5DA028;
+		@include text-shadow(-4px 4px 0 #427021, 0 10px 10px #222);
+		@include rotate(-6deg);
+		@include inline-block;
+	}
+}
+
+#slogan {
+	display: block;
+	margin-top: 10px;
+	font: 1.2em/1 sans-serif;
+}
+
+#container {
+	// background: url('winnie1.jpg') #FFF;
+	background: #FFF;
+	padding: 20px;
+	position: relative;
+	@include border-radius(5px);
+	@include box-shadow(0 5px 30px #222);
+	div {
+		width: 180px;
+		height: 180px;
+		background-color: $green;
+		background-image: url('winnie1.jpg');
+		margin: 1px;
+		float: left;
+		text-align: center;
+		color: rgba($green, 0.5);
+		cursor: default;
+		font: 4em/180px 'Chewy', cursive;
+		@include border-radius(5px);
+		@include opacity(0.8);
+	}
+	&.completed {
+		background: url('winnie1.jpg') #FFF;
+		div {
+			@include opacity(0);
+		}
+	}
+}
+
+#container div.ui-draggable-dragging {
+	// background: orange !important;
+}
+
+#container div.drop-hover {
+	// background: gold !important;
+}
