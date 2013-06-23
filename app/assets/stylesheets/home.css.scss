@@ -2,22 +2,24 @@
 @import url(http://fonts.googleapis.com/css?family=Chewy);
 @import url(http://fonts.googleapis.com/css?family=Aladin);
 @import "compass/css3";
+@import "mixins";
 
 $green: #015F2A;
 
+
 body {
-	background: url('bg.jpg') $green;
+	background: url('bg.jpg') $green fixed;
 	margin-bottom: 500px;
 }
 
 .container-fluid {
-	width: 920px;
+	width: 910px;
 	margin: 0 auto;
 }
 
 header {
-	text-align: center;
-	padding: 50px 0;
+	// text-align: center;
+	padding: 50px;
 }
 
 #logo {
@@ -50,7 +52,7 @@ header {
 }
 
 #slogan {
-	display: block;
+	display: none;
 	margin-top: 10px;
 	font: 1.2em/1 sans-serif;
 }
@@ -60,24 +62,28 @@ header {
 	background: #FFF;
 	padding: 20px;
 	position: relative;
-	@include border-radius(5px);
+	@include border-radius(7px);
 	@include box-shadow(0 5px 30px #222);
 	div {
+		float: left;
+		margin: 1px;
 		width: 180px;
 		height: 180px;
-		background-color: $green;
-		background-image: url('winnie1.jpg');
-		margin: 1px;
-		float: left;
-		text-align: center;
-		color: rgba($green, 0.5);
 		cursor: default;
+		text-align: center;
+		// -webkit-text-stroke: 2px white;
+		color: $green;
+		background-color: $green;
 		font: 4em/180px 'Chewy', cursive;
-		@include border-radius(5px);
-		@include opacity(0.8);
+		background-image: url('cars1.jpg');
+		@include opacity(0.7);
+		@include border-radius(7px);
+		@include text-stroke(white);
+		@include transition-property(opacity);
+		@include transition-duration(0.3s);
 	}
 	&.completed {
-		background: url('winnie1.jpg') #FFF;
+		background: url('cars1.jpg') #FFF;
 		div {
 			@include opacity(0);
 		}
@@ -85,9 +91,17 @@ header {
 }
 
 #container div.ui-draggable-dragging {
-	// background: orange !important;
+	@include opacity(1);
+	@include box-shadow(10px 10px 1px rgba(#555, 0.5));
 }
 
 #container div.drop-hover {
-	// background: gold !important;
+	// @include opacity(1);
+}
+
+::selection {
+	color: inherit;
+}
+::-moz-selection {
+	color: inherit;
 }
