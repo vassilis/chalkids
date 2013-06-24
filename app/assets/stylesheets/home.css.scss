@@ -75,7 +75,7 @@ header {
 		color: $green;
 		background-color: $green;
 		font: 4em/180px 'Chewy', cursive;
-		background-image: url('cars1.jpg');
+		background-image: url('winnie1.jpg');
 		@include opacity(0.7);
 		@include border-radius(7px);
 		@include text-stroke(white);
@@ -83,7 +83,7 @@ header {
 		@include transition-duration(0.3s);
 	}
 	&.completed {
-		background: url('cars1.jpg') #FFF;
+		background: url('winnie1.jpg') #FFF;
 		div {
 			@include opacity(0);
 		}
