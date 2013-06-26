@@ -53,7 +53,7 @@ $ ->
 			$next1 = $item1.next()
 			$next2 = $item2.next()
 
-			# swap positions
+			# swap positions (use CSS animations)
 			$item1.animate
 				top: $item2.attr('data-y')
 				left: $item2.attr('data-x')
