@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>aaaa</title>
+		<meta charset="utf-8" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="/sq/jquery-ui-1.10.4.custom.min.js"></script>
+		<style>
+			html, body {
+				height: 100%;
+			}
+			body {
+				margin: 0;
+				line-height: 1;
+				overflow: hidden;
+				background: #FFF;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			#container {
+				height: 100%;
+			}
+			.sortable-placeholder,
+			span {
+				display: block;
+				background: #000;
+				/*display: flex;*/
+				/*align-items: center;*/
+				/*justify-content: center;*/
+				float: left;
+				overflow: hidden;
+				font-size: .6em;
+				/*border-radius: 10px;*/
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			$body = $("body");
+			$container = $('<div id="container" class="container"></div>');
+			$sq = $("<span></span>");
+			w = $(window).width();
+			h = $(window).height();
+			// a = w / h;
+			n = 8;
+			// xpx = w / n;
+			x = w / n * 100 / w;
+			y = h / n * 100 / h;
+			// ypx = w / n / a;
+			// y = (ypx / h) * 100;
+			// y_count = h / ypx;
+			total = n * n;
+			for (i = 1; i <= total; i++) {
+				$sqx = $sq.clone();
+				hex = getRandomColor();
+				$sqx.css({
+					"width": x + "%",
+					"height": y + "%",
+					"background": hex
+				});
+				// .text(hex);
+				$container.append($sqx);
+			}
+			$body.append($container);
+
+			$("span").on("click", function(){
+				$el = $(this);
+				if(!$el.hasClass("ui-draggable-dragging")) {
+					$(this).css("background", getRandomColor());
+				}
+			})
+
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+					color += letters[Math.round(Math.random() * 15)];
+				}
+				return color;
+			}
+
+			$(function() {
+				$("span").draggable({
+					revert: true,
+					containment: "#container",
+					scroll: false,
+					snap: true,
+					stack: "#container span"
+				});
+				$("span").droppable({
+					drop: function(event, ui) {
+						$el = $(this);
+						drop_color = $(this).css("background");
+						drag_color = ui.draggable.css("background");
+						$(this).css("background", drag_color);
+						ui.draggable.css("background", drop_color);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
