@@ -1,0 +1,30 @@
+
+
+html, body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	line-height: 1;
+	overflow: hidden;
+	background: #222;
+}
+* {
+	box-sizing: border-box;
+}
+#container {
+	height: 100%;
+	/*padding: 50px;*/
+}
+.sortable-placeholder,
+span {
+	display: block;
+	background: #000;
+	/*display: flex;*/
+	/*align-items: center;*/
+	/*justify-content: center;*/
+	float: left;
+	overflow: hidden;
+	font-size: .6em;
+	/*border-radius: 10px;*/
+}
