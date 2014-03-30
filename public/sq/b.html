@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+				background: #333;
+				overflow: hidden;
+			}
+		</style>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.2.min.js"></script>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script defer="defer">
+			var stage = new Kinetic.Stage({
+				container: 'container',
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+
+			w = $(window).width();
+			h = $(window).height();
+			n = 20;
+			x = w / n;
+			y = h / n;
+			total = n * n;
+			x_pos = 0;
+			y_pos = 0;
+
+			var layer = new Kinetic.Layer();
+			for (i = 1; i <= total; i++) {
+				x_pos += x;
+				if (i % n == 0) {
+					x_pos = 0;
+					y_pos += y;
+				}
+				var rect = new Kinetic.Rect({
+					x: x_pos,
+					y: y_pos,
+					width: x,
+					height: y,
+					fill: getRandomColor(),
+					strokeWidth: 0
+				});
+				layer.add(rect);
+			}
+			stage.add(layer);
+
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+					color += letters[Math.round(Math.random() * 15)];
+				}
+				return color;
+			}
+		</script>
+	</body>
+</html>
