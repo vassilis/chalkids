@@ -22,42 +22,61 @@
 				height: window.innerHeight
 			});
 
-			w = $(window).width();
-			h = $(window).height();
-			n = 20;
-			x = w / n;
-			y = h / n;
-			total = n * n;
-			x_pos = 0;
-			y_pos = 0;
-
+			var w = $(window).width();
+			var h = $(window).height();
+			var n = 20;
+			var x = 40;
+			var y = 40;
+			var total = 1000;
+			var x_pos = 0;
+			var y_pos = 0;
+			var drawing = false;
 			var layer = new Kinetic.Layer();
-			for (i = 1; i <= total; i++) {
-				x_pos += x;
-				if (i % n == 0) {
-					x_pos = 0;
-					y_pos += y;
+
+			while (y_pos < h + 100) {
+				while (x_pos < w + 100) {
+					var rect = new Kinetic.Rect({
+						x: x_pos,
+						y: y_pos,
+						width: x,
+						height: y,
+						fill: "#FFF",
+						strokeWidth: 0
+					});
+					layer.add(rect);
+					x_pos += x;
 				}
-				var rect = new Kinetic.Rect({
-					x: x_pos,
-					y: y_pos,
-					width: x,
-					height: y,
-					fill: getRandomColor(),
-					strokeWidth: 0
-				});
-				layer.add(rect);
+				x_pos = 0;
+				y_pos += y;
 			}
 			stage.add(layer);
 
-			function getRandomColor() {
-				var letters = '0123456789ABCDEF'.split('');
-				var color = '#';
-				for (var i = 0; i < 6; i++ ) {
-					color += letters[Math.round(Math.random() * 15)];
-				}
-				return color;
-			}
+			var shapes = stage.find('Rect');
+			shapes.each(function(rect) {
+				rect.on("mousedown touchstart", function(){
+					// this.fill(Kinetic.Util.getRandomColor());
+					drawing = true;
+					if (this.fill() == "#FFF") {
+						this.fill("#000");
+					} else {
+						this.fill("#FFF");
+					}
+					layer.batchDraw();
+				});
+				rect.on("mouseup touchend", function(){
+					drawing = false;
+				});
+				rect.on("mouseover touchmove", function(){
+					if (drawing) {
+						if (this.fill() == "#FFF") {
+							this.fill("#000");
+						} else {
+							this.fill("#FFF");
+						}
+						layer.batchDraw();
+					}
+				});
+			});
 		</script>
 	</body>
 </html>
