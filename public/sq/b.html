@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+				background: #333;
+				overflow: hidden;
+			}
+		</style>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.2.min.js"></script>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script defer="defer">
+			var stage = new Kinetic.Stage({
+				container: 'container',
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+
+			var w = $(window).width();
+			var h = $(window).height();
+			var n = 20;
+			var x = 40;
+			var y = 40;
+			var total = 1000;
+			var x_pos = 0;
+			var y_pos = 0;
+			var drawing = false;
+			var layer = new Kinetic.Layer();
+
+			while (y_pos < h + 100) {
+				while (x_pos < w + 100) {
+					var rect = new Kinetic.Rect({
+						x: x_pos,
+						y: y_pos,
+						width: x,
+						height: y,
+						fill: "#FFF",
+						strokeWidth: 0
+					});
+					layer.add(rect);
+					x_pos += x;
+				}
+				x_pos = 0;
+				y_pos += y;
+			}
+			stage.add(layer);
+
+			var shapes = stage.find('Rect');
+			shapes.each(function(rect) {
+				rect.on("mousedown touchstart", function(){
+					// this.fill(Kinetic.Util.getRandomColor());
+					drawing = true;
+					if (this.fill() == "#FFF") {
+						this.fill("#000");
+					} else {
+						this.fill("#FFF");
+					}
+					layer.batchDraw();
+				});
+				rect.on("mouseup touchend", function(){
+					drawing = false;
+				});
+				rect.on("mouseover touchmove", function(){
+					if (drawing) {
+						if (this.fill() == "#FFF") {
+							this.fill("#000");
+						} else {
+							this.fill("#FFF");
+						}
+						layer.batchDraw();
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

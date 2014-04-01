@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>aaaa</title>
+		<meta charset="utf-8" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<style>
+			* {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			body {
+				margin: 20px;
+			}
+			.box {
+				width: 25%;
+				line-height: 120px;
+				text-align: center;
+				float: left;
+				font-size: 60px;
+				border: 2px white solid;
+				cursor: pointer;
+				border-radius: 20px;
+				transition: all .2s;
+			}
+			.box-g {
+				background: #FFDBEA;
+				color: #A0427A;
+			}
+			.box-g:hover {
+				background: #A0427A;
+				color: white;
+			}
+			.box-b {
+				color: #006400;
+				background: #CAE2DC;
+			}
+			.box-b:hover {
+				background: #006400;
+				color: white;
+			}
+			.col {
+				width: 48%;
+				float: left;
+				margin: 1%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="ariadne" class="col"></div>
+		<div id="orpheus" class="col"></div>
+		<script>
+			letters = ["Α α","Β β","Γ γ","Δ δ","Ε ε","Ζ ζ","Η η","Θ θ","Ι ι","Κ κ","Λ λ","Μ μ","Ν ν","Ξ ξ","Ο ο","Π π","Ρ ρ","Σ σ","Τ τ","Υ υ","Φ φ","Χ χ","Ψ ψ","Ω ω"]
+			for (i=0;i<letters.length;i++) {
+				f = i + 1;
+				box1 = $("<div class='box box-g' data-sound='" + f + "a.mp3'></div>");
+				box1.html(letters[i]);
+				$("#ariadne").append(box1);
+				box2 = $("<div class='box box-b' data-sound='" + f + ".mp3'></div>");
+				box2.html(letters[i]);
+				$("#orpheus").append(box2);
+			}
+			$(".box").on("click",function(){
+				var file = $(this).attr("data-sound");
+				var snd = new Audio(file);
+				snd.play();
+			})
+		</script>
+	</body>
+</html>

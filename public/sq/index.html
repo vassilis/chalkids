@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>aaaa</title>
+		<meta charset="utf-8" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="/sq/jquery-ui-1.10.4.custom.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/sq/index.css">
+	</head>
+	<body>
+		<script>
+			$body = $("body");
+			$container = $('<div id="container" class="container"></div>');
+			$sq = $("<span></span>");
+			w = $(window).width();
+			h = $(window).height();
+			// a = w / h;
+			n = 20;
+			// xpx = w / n;
+			x = w / n * 100 / w;
+			y = h / n * 100 / h;
+			// ypx = w / n / a;
+			// y = (ypx / h) * 100;
+			// y_count = h / ypx;
+			total = n * n;
+			// hex = getRandomColor();
+			hex = "#FFFFFF";
+			for (i = 1; i <= total; i++) {
+				$sqx = $sq.clone();
+				$sqx.css({
+					"width": x + "%",
+					"height": y + "%",
+					"background-color": hex
+				});
+				// .text(hex);
+				// if (i > total - n) {
+				// 	$sqx.css("height", y + 5 + "%");
+				// }
+				$container.append($sqx);
+			}
+			$body.append($container);
+
+			$("span").on("click", function(){
+				$el = $(this);
+				if(!$el.hasClass("ui-draggable-dragging")) {
+					$(this).css("background-color", getRandomColor());
+					var file = "/sq/2.mp3";
+					var snd = new Audio(file);
+					snd.play();
+				}
+			})
+
+			function getRandomColor() {
+				var letters = '0123456789ABCDEF'.split('');
+				var color = '#';
+				for (var i = 0; i < 6; i++ ) {
+					color += letters[Math.round(Math.random() * 15)];
+				}
+				return color;
+			}
+
+			$(function() {
+				$("span").draggable({
+					// revert: true,
+					containment: "#container",
+					scroll: false,
+					snap: true,
+					stack: "#container span",
+					helper: "clone"
+				});
+				$("span").droppable({
+					drop: function(event, ui) {
+						$el = $(this);
+						drop_color = $(this).css("background-color");
+						drag_color = ui.draggable.css("background-color");
+						$el.css("background-color", drag_color);
+						// ui.draggable.css("background-color", drop_color);
+						var file = "/sq/1.mp3";
+						var snd = new Audio(file);
+						snd.play();
+					},
+					over: function( event, ui ) {
+						$el = $(this);
+						drag_color = ui.draggable.css("background-color");
+						$el.css("background-color", drag_color);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
