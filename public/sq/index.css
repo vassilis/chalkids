@@ -43,8 +43,8 @@ span {
 	display: none;
 }
 
-.colors {
-	width: 40%;
+#colors {
+	width: 50%;
 	margin: 100px auto;
 }
 
@@ -59,4 +59,13 @@ span {
 }
 .color:hover {
 	border-color: #CCC;
+}
+.color.active:before {
+	content: "";
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	border: 2px #777 solid;
+	border-radius: 50%;
+	margin: -4px 0 0 -4px;
 }
