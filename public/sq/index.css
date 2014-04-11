@@ -1,5 +1,9 @@
 
 
+::-webkit-scrollbar {
+    width: 0;
+}
+
 html, body {
 	height: 100%;
 }
@@ -7,8 +11,9 @@ html, body {
 body {
 	margin: 0;
 	line-height: 1;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	background: #222;
+	cursor: default !important;
 }
 
 * {
@@ -82,9 +87,9 @@ span {
 	border: 1px rgba(0, 0, 0, 0.03) solid;
 }
 
-.show-grid i {
+/*.show-grid i {
 	background-color: rgba(0, 0, 0, 0.03);
-}
+}*/
 
 span {
 	position: relative;

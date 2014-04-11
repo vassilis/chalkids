@@ -11,6 +11,7 @@ function getRandomColor() {
 
 $(function() {
 
+	window.drawing = false;
 	var $options = $("#options");
 	var colors = [
 		"#000","#111","#222","#333","#444","#555",
@@ -40,7 +41,7 @@ $(function() {
 	w = $(window).width();
 	h = $(window).height();
 	// a = w / h;
-	n = 12;
+	n = 20;
 	// xpx = w / n;
 	x = w / n * 100 / w;
 	// y = h / n * 100 / h / 2;
@@ -48,7 +49,7 @@ $(function() {
 	// y = (ypx / h) * 100;
 	// y_count = h / ypx;
 	y = h / n * 100 / h;
-	total = n * n;
+	total = n * n * 5;
 	// hex = getRandomColor();
 	hex = "#000";
 
@@ -68,7 +69,7 @@ $(function() {
 
 	$("span").on("click", function(){
 		$el = $(this);
-		if(!$el.hasClass("ui-draggable-dragging")) {
+		if (!$el.hasClass("ui-draggable-dragging")) {
 			// $(this).css("background-color", getRandomColor());
 			$(this).css("background-color", hex);
 			var file = "/sq/2.mp3";
@@ -76,34 +77,42 @@ $(function() {
 			snd.play();
 		}
 		return false;
-	})
-
-	$("span").draggable({
-		// revert: true,
-		containment: "#container",
-		scroll: false,
-		snap: true,
-		stack: "#container span",
-		helper: "clone"
 	});
 
-	$("span").droppable({
-		drop: function(event, ui) {
-			$el = $(this);
-			drop_color = $(this).css("background-color");
-			drag_color = ui.draggable.css("background-color");
-			$el.css("background-color", drag_color);
-			// ui.draggable.css("background-color", drop_color);
-			var file = "/sq/1.mp3";
-			var snd = new Audio(file);
-			snd.play();
-		},
-		over: function( event, ui ) {
-			$el = $(this);
-			drag_color = ui.draggable.css("background-color");
-			$el.css("background-color", drag_color);
+	$("span").on("mouseenter", function(){
+		$el = $(this);
+		if (window.drawing) {
+			$(this).css("background-color", hex);
 		}
+		return false;
 	});
+
+	// $("span").draggable({
+	// 	// revert: true,
+	// 	containment: "#container",
+	// 	scroll: false,
+	// 	snap: true,
+	// 	stack: "#container span",
+	// 	helper: "clone"
+	// });
+
+	// $("span").droppable({
+	// 	drop: function(event, ui) {
+	// 		$el = $(this);
+	// 		drop_color = $(this).css("background-color");
+	// 		drag_color = ui.draggable.css("background-color");
+	// 		$el.css("background-color", drag_color);
+	// 		// ui.draggable.css("background-color", drop_color);
+	// 		var file = "/sq/1.mp3";
+	// 		var snd = new Audio(file);
+	// 		snd.play();
+	// 	},
+	// 	over: function( event, ui ) {
+	// 		$el = $(this);
+	// 		drag_color = ui.draggable.css("background-color");
+	// 		$el.css("background-color", drag_color);
+	// 	}
+	// });
 
 	$body.on("keypress", function(e){
 		// console.log(e.which);
@@ -117,6 +126,7 @@ $(function() {
 				$("body").addClass("show-grid");
 			}
 		}
+		return false;
 	});
 
 	$body.on("click", ".color", function(e){
@@ -124,5 +134,15 @@ $(function() {
 		$el.addClass("active").siblings().removeClass("active");
 		hex = $el.css("background-color");
 		$("#options").hide();
-	})
+	});
+
+	$body.on("mousedown", function(e){
+		window.drawing = true;
+		e.preventDefault();
+	});
+
+	$body.on("mouseup", function(e){
+		window.drawing = false;
+		e.preventDefault();
+	});
 });
