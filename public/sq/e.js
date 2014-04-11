@@ -52,7 +52,7 @@ $(function() {
 	// hex = getRandomColor();
 	hex = "#000";
 
-	$("#style").text("span{width:"+x+"%;height:"+y+"%;background-color:#FFF;}");
+	$("body").append("<style>span{width:"+x+"%;height:"+y+"%;background-color:#FFF;}</style>");
 
 	for (i = 1; i <= total; i++) {
 		$sqx = $sq.clone();
@@ -66,7 +66,7 @@ $(function() {
 	}
 	$body.append($container);
 
-	$("span, i").on("click", function(){
+	$("span").on("click", function(){
 		$el = $(this);
 		if(!$el.hasClass("ui-draggable-dragging")) {
 			// $(this).css("background-color", getRandomColor());
