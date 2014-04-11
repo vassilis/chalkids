@@ -29,7 +29,7 @@ $(function() {
 	$colors = $("<div id='colors'></div>");
 	for (i=0;i<colors.length;i++){
 		var $color = $('<div class="color"></div>');
-		$color.css("background", colors[i]);
+		$color.css("background-color", colors[i]);
 		$colors.append($color);
 	}
 	$options.append($colors);
@@ -43,12 +43,12 @@ $(function() {
 	n = 12;
 	// xpx = w / n;
 	x = w / n * 100 / w;
-	// y = h / n * 100 / h / 2;
+	y = h / n * 100 / h / 2;
 	// ypx = w / n / a;
 	// y = (ypx / h) * 100;
 	// y_count = h / ypx;
-	y = h / n * 100 / h;
-	total = n * n;
+	// y = h / n * 100 / h;
+	total = n * n * 10;
 	// hex = getRandomColor();
 	hex = "#000";
 
@@ -68,8 +68,8 @@ $(function() {
 	$("i").on("click", function(){
 		$el = $(this);
 		if (!$el.hasClass("ui-draggable-dragging")) {
-			// $(this).css("background", getRandomColor());
-			$(this).css("background", hex);
+			// $(this).css("background-color", getRandomColor());
+			$(this).css("background-color", hex);
 			var file = "/sq/2.mp3";
 			var snd = new Audio(file);
 			snd.play();
@@ -80,7 +80,7 @@ $(function() {
 	$("i").on("mouseenter", function(){
 		$el = $(this);
 		if (window.drawing) {
-			$(this).css("background", hex);
+			$(this).css("background-color", hex);
 		}
 		return false;
 	});
@@ -88,7 +88,7 @@ $(function() {
 	$body.on("keypress", function(e){
 		// console.log(e.which);
 		if (e.which == 32) {
-			$("#options").toggle();
+			$("#options").fadeToggle("fast");
 		}
 		if (e.which == 103) {
 			if ($("body").hasClass("show-grid")) {
@@ -103,8 +103,8 @@ $(function() {
 	$body.on("click", ".color", function(e){
 		$el = $(this);
 		$el.addClass("active").siblings().removeClass("active");
-		hex = $el.css("background");
-		$("#options").hide();
+		hex = $el.css("background-color");
+		$("#options").fadeOut("fast");
 	});
 
 	$body.on("mousedown", function(e){
