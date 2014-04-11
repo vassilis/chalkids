@@ -20,7 +20,7 @@ body {
 	box-sizing: border-box;
 }
 
-#container {
+.container {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -28,35 +28,30 @@ body {
 	left: 0;
 }
 
-.sortable-placeholder,
-span {
+b {
 	display: block;
-	background: #000;
-	/*display: flex;*/
-	/*align-items: center;*/
-	/*justify-content: center;*/
+	background: #FFF;
 	float: left;
 	overflow: hidden;
 	font-size: .6em;
-	/*border-radius: 10px;*/
+	position: relative;
 }
 
 #options {
 	position: fixed;
-	/*background: #FFF;*/
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
 	display: none;
 	z-index: 10000;
+	background: rgba(255, 255, 255, 0.75);
 }
 
 #colors {
-	width: 50%;
+	width: 80%;
 	margin: 100px auto;
-	padding: 30px;
-	background-color: rgba(255, 255, 255, 0.75);
+	/*padding: 30px;*/
 	text-align: center;
 }
 
@@ -69,9 +64,11 @@ span {
 	margin: 7px;
 	border: 2px solid #EEE;
 }
+
 .color:hover {
 	border-color: #CCC;
 }
+
 .color.active:before {
 	content: "";
 	position: absolute;
@@ -82,31 +79,45 @@ span {
 	margin: -4px 0 0 -27px;
 }
 
-
-.show-grid span {
-	border: 1px rgba(0, 0, 0, 0.03) solid;
+.grid {
+	display: none;
+	z-index: -1;
 }
 
-/*.show-grid i {
-	background-color: rgba(0, 0, 0, 0.03);
-}*/
+.show-grid .grid {
+	display: block;
+}
 
-span {
-	position: relative;
+.show-grid .main {
+	opacity: .9;
+}
+
+.grid b {
+	border-bottom: 1px #000 solid;
+}
+.grid b > :nth-child(1),
+.grid b > :nth-child(3) {
+	background: #000;
 }
 
 i {
 	position: absolute;
 	display: block;
-	width: 15px;
 	height: 100%;
 	top: 0;
 }
 
-i.left {
+b > :nth-child(1) {
+	width: 15px;
 	left: 0;
 }
 
-i.right {
+b > :nth-child(2) {
+	position: static;
+	margin: 0 15px;
+}
+
+b > :nth-child(3) {
+	width: 15px;
 	right: 0;
 }

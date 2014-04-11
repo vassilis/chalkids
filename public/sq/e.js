@@ -29,19 +29,18 @@ $(function() {
 	$colors = $("<div id='colors'></div>");
 	for (i=0;i<colors.length;i++){
 		var $color = $('<div class="color"></div>');
-		$color.css("background-color", colors[i]);
+		$color.css("background", colors[i]);
 		$colors.append($color);
 	}
 	$options.append($colors);
 
 	$body = $("body");
-	$container = $('<div id="container" class="container"></div>');
-	$sq = $("<span></span>");
-	$gt = $("<i></i>");
+	$container = $('<div class="container"></div>');
+	$sq = $("<b><i></i><i></i><i></i></b>");
 	w = $(window).width();
 	h = $(window).height();
 	// a = w / h;
-	n = 20;
+	n = 12;
 	// xpx = w / n;
 	x = w / n * 100 / w;
 	// y = h / n * 100 / h / 2;
@@ -49,29 +48,28 @@ $(function() {
 	// y = (ypx / h) * 100;
 	// y_count = h / ypx;
 	y = h / n * 100 / h;
-	total = n * n * 5;
+	total = n * n;
 	// hex = getRandomColor();
 	hex = "#000";
 
-	$("body").append("<style>span{width:"+x+"%;height:"+y+"%;background-color:#FFF;}</style>");
+	$("body").append("<style>b{width:"+x+"%;height:"+y+"%;}</style>");
 
 	for (i = 1; i <= total; i++) {
 		$sqx = $sq.clone();
 		$container.append($sqx);
-		$gtx_left = $gt.clone();
-		$gtx_left.addClass("left");
-		$gtx_right = $gt.clone();
-		$gtx_right.addClass("right");
-		$sqx.append($gtx_left);
-		$sqx.append($gtx_right);
 	}
-	$body.append($container);
 
-	$("span").on("click", function(){
+	$body.append($container.clone().addClass("main"));
+	$body.append($container.clone().addClass("grid"));
+
+
+	// events
+
+	$("i").on("click", function(){
 		$el = $(this);
 		if (!$el.hasClass("ui-draggable-dragging")) {
-			// $(this).css("background-color", getRandomColor());
-			$(this).css("background-color", hex);
+			// $(this).css("background", getRandomColor());
+			$(this).css("background", hex);
 			var file = "/sq/2.mp3";
 			var snd = new Audio(file);
 			snd.play();
@@ -79,40 +77,13 @@ $(function() {
 		return false;
 	});
 
-	$("span").on("mouseenter", function(){
+	$("i").on("mouseenter", function(){
 		$el = $(this);
 		if (window.drawing) {
-			$(this).css("background-color", hex);
+			$(this).css("background", hex);
 		}
 		return false;
 	});
-
-	// $("span").draggable({
-	// 	// revert: true,
-	// 	containment: "#container",
-	// 	scroll: false,
-	// 	snap: true,
-	// 	stack: "#container span",
-	// 	helper: "clone"
-	// });
-
-	// $("span").droppable({
-	// 	drop: function(event, ui) {
-	// 		$el = $(this);
-	// 		drop_color = $(this).css("background-color");
-	// 		drag_color = ui.draggable.css("background-color");
-	// 		$el.css("background-color", drag_color);
-	// 		// ui.draggable.css("background-color", drop_color);
-	// 		var file = "/sq/1.mp3";
-	// 		var snd = new Audio(file);
-	// 		snd.play();
-	// 	},
-	// 	over: function( event, ui ) {
-	// 		$el = $(this);
-	// 		drag_color = ui.draggable.css("background-color");
-	// 		$el.css("background-color", drag_color);
-	// 	}
-	// });
 
 	$body.on("keypress", function(e){
 		// console.log(e.which);
@@ -132,7 +103,7 @@ $(function() {
 	$body.on("click", ".color", function(e){
 		$el = $(this);
 		$el.addClass("active").siblings().removeClass("active");
-		hex = $el.css("background-color");
+		hex = $el.css("background");
 		$("#options").hide();
 	});
 
