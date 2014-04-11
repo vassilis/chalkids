@@ -67,14 +67,12 @@ $(function() {
 
 	$("i").on("click", function(){
 		$el = $(this);
-		if (!$el.hasClass("ui-draggable-dragging")) {
-			// $(this).css("background-color", getRandomColor());
-			// $(this).css("background-color", hex);
-			$(this).attr("style","background:"+hex);
-			// var file = "/sq/2.mp3";
-			// var snd = new Audio(file);
-			// snd.play();
-		}
+		// $(this).css("background-color", getRandomColor());
+		// $(this).css("background-color", hex);
+		$(this).attr("style","background:"+hex);
+		// var file = "/sq/2.mp3";
+		// var snd = new Audio(file);
+		// snd.play();
 		return false;
 	});
 
