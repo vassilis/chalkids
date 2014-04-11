@@ -36,35 +36,37 @@ $(function() {
 	$body = $("body");
 	$container = $('<div id="container" class="container"></div>');
 	$sq = $("<span></span>");
+	$gt = $("<i></i>");
 	w = $(window).width();
 	h = $(window).height();
 	// a = w / h;
 	n = 12;
 	// xpx = w / n;
 	x = w / n * 100 / w;
-	y = h / n * 100 / h / 2;
+	// y = h / n * 100 / h / 2;
 	// ypx = w / n / a;
 	// y = (ypx / h) * 100;
 	// y_count = h / ypx;
-	total = n * n * 3;
+	y = h / n * 100 / h;
+	total = n * n;
 	// hex = getRandomColor();
 	hex = "#000";
+
+	$("#style").text("span{width:"+x+"%;height:"+y+"%;background-color:#FFF;}");
+
 	for (i = 1; i <= total; i++) {
 		$sqx = $sq.clone();
-		$sqx.css({
-			"width": x + "%",
-			"height": y + "%",
-			"background-color": "#FFF"
-		});
-		// .text(hex);
-		// if (i > total - n) {
-		// 	$sqx.css("height", y + 5 + "%");
-		// }
 		$container.append($sqx);
+		$gtx_left = $gt.clone();
+		$gtx_left.addClass("left");
+		$gtx_right = $gt.clone();
+		$gtx_right.addClass("right");
+		$sqx.append($gtx_left);
+		$sqx.append($gtx_right);
 	}
 	$body.append($container);
 
-	$("span").on("click", function(){
+	$("span, i").on("click", function(){
 		$el = $(this);
 		if(!$el.hasClass("ui-draggable-dragging")) {
 			// $(this).css("background-color", getRandomColor());
@@ -73,6 +75,7 @@ $(function() {
 			var snd = new Audio(file);
 			snd.play();
 		}
+		return false;
 	})
 
 	$("span").draggable({
@@ -106,6 +109,13 @@ $(function() {
 		// console.log(e.which);
 		if (e.which == 32) {
 			$("#options").toggle();
+		}
+		if (e.which == 103) {
+			if ($("body").hasClass("show-grid")) {
+				$("body").removeClass("show-grid");
+			} else {
+				$("body").addClass("show-grid");
+			}
 		}
 	});
 
