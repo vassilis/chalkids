@@ -129,6 +129,10 @@ $(function() {
 		// return false;
 	});
 
+	$body.on("keypress", function(e){
+		return false;
+	});
+
 	$body.on("click", ".color", function(e){
 		var $el = $(this);
 		$el.addClass("active").siblings().removeClass("active");
