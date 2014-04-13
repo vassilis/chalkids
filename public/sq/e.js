@@ -26,6 +26,24 @@ jQuery.fn.extend({
 				);
 			}
 		});
+	},
+	select_add: function() {
+		return this.each(function() {
+			var $el = $(this);
+			$.undone("register",
+				function () { $el.addClass("sel"); },
+				function () { $el.removeClass("sel"); }
+			);
+		});
+	},
+	select_del: function() {
+		return this.each(function() {
+			var $el = $(this);
+			$.undone("register",
+				function () { $el.removeClass("sel"); },
+				function () { $el.addClass("sel"); }
+			);
+		});
 	}
 });
 
@@ -35,6 +53,7 @@ $(function() {
 
 	window.acting = false;
 	window.clearing = false;
+	window.selecting = false;
 
 	var $options = $("#options");
 	var $del = $('<div class="color del"></div>');
@@ -92,8 +111,8 @@ $(function() {
 
 	// events
 
-	$body.on("mousedown", "i", function(){
-		// var $el = $(this);
+	$body.on("mousedown", "i", function(e){
+		var $el = $(this);
 		// var style = $el.attr("style");
 		// $(this).css("background-color", getRandomColor());
 		// $(this).css("background-color", hex);
@@ -102,11 +121,20 @@ $(function() {
 		// var snd = new Audio(file);
 		// snd.play();
 		// return false;
-		$(this).update();
+		if (selecting) {
+			(e.shiftKey) ? $el.select_del() : $el.select_add();
+		} else {
+			$el.update();
+		}
 	});
 
-	$body.on("mouseenter", "i", function(){
-		if (acting) $(this).update();
+	$body.on("mouseenter", "i", function(e){
+		var $el = $(this);
+		if (selecting && acting) {
+			(e.shiftKey) ? $el.select_del() : $el.select_add();
+		} else if (acting) {
+			$el.update();
+		}
 	});
 
 	$body.on("keydown", function(e){
@@ -119,6 +147,10 @@ $(function() {
 			if (key === 89) $.undone("redo"); // y
 		}
 		if (key == 32) $("#options").fadeToggle("fast"); // space
+		if (key == 77) selecting = selecting ? false : true; // m
+		if (key == 78) { // n
+			$(".sel").removeClass("sel");
+		}
 		if (key == 71) { // g
 			if ($body.hasClass("show-grid")) {
 				$body.removeClass("show-grid");
@@ -134,13 +166,33 @@ $(function() {
 	});
 
 	$body.on("click", ".color", function(e){
+		var target = document.querySelector('input[name="colortarget"]:checked').value;
 		var $el = $(this);
-		$el.addClass("active").siblings().removeClass("active");
-		if ($el.hasClass("del")) {
-			clearing = true;
-		} else {
-			clearing = false;
-			hex = $el.css("background-color");
+		var color = $el.css("background-color");
+		switch (target) {
+			case "brush":
+				$el.addClass("active").siblings().removeClass("active");
+				if ($el.hasClass("del")) {
+					clearing = true;
+				} else {
+					clearing = false;
+					hex = color;
+				}
+				break;
+			case "body":
+				$("body").css("background-color", color);
+				break;
+			case "container":
+				$(".container").css("background-color", color);
+				break;
+			case "selection":
+				var $sel = $(".sel");
+				if ($el.hasClass("del")) {
+					$sel.removeAttr("style");
+				} else {
+					$sel.attr("style", "background:" + color);
+				}
+				break;
 		}
 		$("#options").fadeOut("fast");
 	});

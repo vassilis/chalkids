@@ -30,7 +30,6 @@ body {
 
 b {
 	display: block;
-	background: #FFF;
 	float: left;
 	overflow: hidden;
 	font-size: .6em;
@@ -48,9 +47,13 @@ b {
 	background: rgba(255, 255, 255, 0.9);
 }
 
+#options input {
+	margin-top: 0;
+}
+
 #colors {
 	width: 80%;
-	margin: 100px auto;
+	margin: 50px auto;
 	/*padding: 30px;*/
 	text-align: center;
 }
@@ -81,6 +84,10 @@ b {
 	border: 2px #CCC solid;
 	border-radius: 50%;
 	margin: -7px 0 0 -30px;
+}
+
+.main {
+	background: #FFF;
 }
 
 .grid {
@@ -124,4 +131,8 @@ b > :nth-child(2) {
 b > :nth-child(3) {
 	width: 15px;
 	right: 0;
+}
+
+i.sel {
+	border: 1px red solid;
 }
