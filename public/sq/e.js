@@ -9,10 +9,35 @@ function getRandomColor() {
 	return color;
 }
 
+jQuery.fn.extend({
+	update: function() {
+		return this.each(function() {
+			var $el = $(this);
+			var style = $el.attr("style");
+			if (clearing) {
+				$.undone("register",
+					function () { $el.removeAttr("style"); },
+					function () { $el.attr("style", style); }
+				);
+			} else {
+				$.undone("register",
+					function () { $el.attr("style", "background:" + hex); },
+					function () { $el.removeAttr("style"); }
+				);
+			}
+		});
+	}
+});
+
 $(function() {
 
-	window.drawing = false;
+	$.undone();
+
+	window.acting = false;
+	window.clearing = false;
+
 	var $options = $("#options");
+	var $del = $('<div class="color del"></div>');
 	var colors = [
 		"#000","#111","#222","#333","#444","#555",
 		"#666","#777","#888","#999","#AAA","#BBB",
@@ -32,27 +57,29 @@ $(function() {
 		$color.css("background-color", colors[i]);
 		$colors.append($color);
 	}
+	$colors.append($del);
 	$options.append($colors);
 
-	$body = $("body");
-	$container = $('<div class="container"></div>');
-	$sq = $("<b><i></i><i></i><i></i></b>");
-	w = $(window).width();
-	h = $(window).height();
+	var $body = $("body");
+	var $container = $('<div class="container"></div>');
+	var $sq = $("<b><i></i><i></i><i></i></b>");
+	var w = $(window).width();
+	// h = $(window).height();
 	// a = w / h;
-	n = 12;
+	var n = 12;
 	// xpx = w / n;
-	x = w / n * 100 / w;
-	y = h / n * 100 / h / 2;
+	var x = w / n * 100 / w;
+	// y = h / n * 100 / h / 2;
 	// ypx = w / n / a;
 	// y = (ypx / h) * 100;
 	// y_count = h / ypx;
 	// y = h / n * 100 / h;
-	total = n * n * 10;
+	var total = n * 100;
 	// hex = getRandomColor();
 	hex = "#000";
+	del = false;
 
-	$("body").append("<style>b{width:"+x+"%;height:"+y+"%;}</style>");
+	$("body").append("<style>b{width:"+x+"%;height:30px;}</style>");
 
 	for (i = 1; i <= total; i++) {
 		$sqx = $sq.clone();
@@ -65,55 +92,68 @@ $(function() {
 
 	// events
 
-	$("i").on("click", function(){
-		$el = $(this);
+	$body.on("mousedown", "i", function(){
+		// var $el = $(this);
+		// var style = $el.attr("style");
 		// $(this).css("background-color", getRandomColor());
 		// $(this).css("background-color", hex);
-		$(this).attr("style","background:"+hex);
+		// $el.attr("style","background:"+hex);
 		// var file = "/sq/2.mp3";
 		// var snd = new Audio(file);
 		// snd.play();
-		return false;
+		// return false;
+		$(this).update();
 	});
 
-	$("i").on("mouseenter", function(){
-		$el = $(this);
-		if (window.drawing) {
-			// $(this).css("background-color", hex);
-			$(this).attr("style","background:"+hex);
-		}
-		return false;
+	$body.on("mouseenter", "i", function(){
+		if (acting) $(this).update();
 	});
 
-	$body.on("keypress", function(e){
-		// console.log(e.which);
-		if (e.which == 32) {
-			$("#options").fadeToggle("fast");
+	$body.on("keydown", function(e){
+		var key = e.which;
+		// console.log(key);
+		if (e.ctrlKey) { // ctrl
+			if (key === 90) {
+				$.undone("undo"); // z
+			}
+			if (key === 89) $.undone("redo"); // y
 		}
-		if (e.which == 103) {
-			if ($("body").hasClass("show-grid")) {
-				$("body").removeClass("show-grid");
+		if (key == 32) $("#options").fadeToggle("fast"); // space
+		if (key == 71) { // g
+			if ($body.hasClass("show-grid")) {
+				$body.removeClass("show-grid");
 			} else {
-				$("body").addClass("show-grid");
+				$body.addClass("show-grid");
 			}
 		}
-		return false;
+		// return false;
 	});
 
 	$body.on("click", ".color", function(e){
-		$el = $(this);
+		var $el = $(this);
 		$el.addClass("active").siblings().removeClass("active");
-		hex = $el.css("background-color");
+		if ($el.hasClass("del")) {
+			clearing = true;
+		} else {
+			clearing = false;
+			hex = $el.css("background-color");
+		}
 		$("#options").fadeOut("fast");
 	});
 
 	$body.on("mousedown", function(e){
-		window.drawing = true;
+		acting = true;
 		e.preventDefault();
 	});
 
 	$body.on("mouseup", function(e){
-		window.drawing = false;
-		e.preventDefault();
+		acting = false;
+		// e.preventDefault();
 	});
+
+	// $(window).on("undone:change", function(e, name, undoLen, redoLen){
+		// console.log(name);
+		// console.log(undoLen);
+		// console.log(redoLen);
+	// });
 });
