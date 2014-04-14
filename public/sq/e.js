@@ -30,8 +30,21 @@ jQuery.fn.extend({
 	select_add: function() {
 		return this.each(function() {
 			var $el = $(this);
+			var current_top = $el.offset().top;
+			var current_left = $el.offset().left;
 			$.undone("register",
-				function () { $el.addClass("sel"); },
+				function () {
+					$('i').removeClass("sel").filter(function() {
+						var $this = $(this);
+						var top = $this.offset().top;
+						var left = $this.offset().left;
+						var c1 = top >= select_top && top <= current_top;
+						var c2 = top <= select_top && top >= current_top;
+						var c3 = left <= select_left && left >= current_left;
+						var c4 = left >= select_left && left <= current_left;
+						return (c1 || c2) && (c3 || c4);
+					}).addClass("sel");
+				},
 				function () { $el.removeClass("sel"); }
 			);
 		});
@@ -54,6 +67,8 @@ $(function() {
 	window.acting = false;
 	window.clearing = false;
 	window.selecting = false;
+	window.select_left = 0;
+	window.select_top = 0;
 
 	var $options = $("#options");
 	var $del = $('<div class="color del"></div>');
@@ -122,6 +137,8 @@ $(function() {
 		// snd.play();
 		// return false;
 		if (selecting) {
+			select_left = $el.offset().left;
+			select_top = $el.offset().top;
 			(e.shiftKey) ? $el.select_del() : $el.select_add();
 		} else {
 			$el.update();
@@ -131,6 +148,7 @@ $(function() {
 	$body.on("mouseenter", "i", function(e){
 		var $el = $(this);
 		if (selecting && acting) {
+
 			(e.shiftKey) ? $el.select_del() : $el.select_add();
 		} else if (acting) {
 			$el.update();
@@ -139,7 +157,7 @@ $(function() {
 
 	$body.on("keydown", function(e){
 		var key = e.which;
-		// console.log(key);
+		console.log(key);
 		if (e.ctrlKey) { // ctrl
 			if (key === 90) {
 				$.undone("undo"); // z
@@ -158,7 +176,9 @@ $(function() {
 				$body.addClass("show-grid");
 			}
 		}
-		// return false;
+		if (key == 46) { // del
+			$(".sel").removeAttr("style");
+		}
 	});
 
 	$body.on("keypress", function(e){
@@ -204,7 +224,8 @@ $(function() {
 
 	$body.on("mouseup", function(e){
 		acting = false;
-		// e.preventDefault();
+		select_left = 0;
+		select_top = 0;
 	});
 
 	// $(window).on("undone:change", function(e, name, undoLen, redoLen){
