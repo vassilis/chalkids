@@ -34,7 +34,7 @@ jQuery.fn.extend({
 			var current_left = $el.offset().left;
 			$.undone("register",
 				function () {
-					$('i').removeClass("sel").filter(function() {
+					$('.main i').removeClass("sel").filter(function() {
 						var $this = $(this);
 						var top = $this.offset().top;
 						var left = $this.offset().left;
@@ -44,8 +44,15 @@ jQuery.fn.extend({
 						var c4 = left >= select_left && left <= current_left;
 						return (c1 || c2) && (c3 || c4);
 					}).addClass("sel");
+					// console.log(Math.abs(select_left - current_left));
+					// $select_box.css({
+					// 	top: select_top <= current_top ? select_top : current_top,
+					// 	left: select_left <= current_left ? select_left: current_left,
+					// 	width: Math.abs(select_left - current_left) +  $el.outerWidth(),
+					// 	height: Math.abs(select_top - current_top) + $el.outerHeight()
+					// })
 				},
-				function () { $el.removeClass("sel"); }
+				function () { $('i').removeClass("sel"); }
 			);
 		});
 	},
@@ -69,6 +76,8 @@ $(function() {
 	window.selecting = false;
 	window.select_left = 0;
 	window.select_top = 0;
+	// window.$select_box = $('<div class="select-box"></div>');
+	window.$body = $("body");
 
 	var $options = $("#options");
 	var $del = $('<div class="color del"></div>');
@@ -94,7 +103,7 @@ $(function() {
 	$colors.append($del);
 	$options.append($colors);
 
-	var $body = $("body");
+	// var $body = $("body");
 	var $container = $('<div class="container"></div>');
 	var $sq = $("<b><i></i><i></i><i></i></b>");
 	var w = $(window).width();
@@ -140,6 +149,13 @@ $(function() {
 			select_left = $el.offset().left;
 			select_top = $el.offset().top;
 			(e.shiftKey) ? $el.select_del() : $el.select_add();
+			// $body.append($select_box);
+			// $select_box.css({
+			// 	top: select_top,
+			// 	left: select_left,
+			// 	width: $el.width(),
+			// 	height: $el.height()
+			// })
 		} else {
 			$el.update();
 		}
@@ -148,8 +164,15 @@ $(function() {
 	$body.on("mouseenter", "i", function(e){
 		var $el = $(this);
 		if (selecting && acting) {
-
 			(e.shiftKey) ? $el.select_del() : $el.select_add();
+			// var current_left = $el.offset().left;
+			// var current_top = $el.offset().top;
+			// $select_box.css({
+			// 	top: select_top <= current_top ? select_top : current_top,
+			// 	left: select_left <= current_left ? select_left: current_left,
+			// 	width: Math.abs(select_left - current_left) +  $el.outerWidth(),
+			// 	height: Math.abs(select_top - current_top) + $el.outerHeight()
+			// })
 		} else if (acting) {
 			$el.update();
 		}
@@ -157,7 +180,7 @@ $(function() {
 
 	$body.on("keydown", function(e){
 		var key = e.which;
-		console.log(key);
+		// console.log(key);
 		if (e.ctrlKey) { // ctrl
 			if (key === 90) {
 				$.undone("undo"); // z
@@ -168,6 +191,7 @@ $(function() {
 		if (key == 77) selecting = selecting ? false : true; // m
 		if (key == 78) { // n
 			$(".sel").removeClass("sel");
+			$select_box.remove();
 		}
 		if (key == 71) { // g
 			if ($body.hasClass("show-grid")) {
