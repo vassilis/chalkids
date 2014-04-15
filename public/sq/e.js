@@ -111,7 +111,7 @@ $(function() {
 	// a = w / h;
 	var n = 12;
 	// xpx = w / n;
-	var x = w / n * 100 / w;
+	// var x = w / n * 100 / w;
 	// y = h / n * 100 / h / 2;
 	// ypx = w / n / a;
 	// y = (ypx / h) * 100;
@@ -120,9 +120,9 @@ $(function() {
 	var total = n * 100;
 	// hex = getRandomColor();
 	hex = "#000";
-	del = false;
+	// del = false;
 
-	$("body").append("<style>b{width:"+x+"%;height:30px;}</style>");
+	// $("body").append("<style>b{width:"+x+"%;height:30px;}</style>");
 
 	for (i = 1; i <= total; i++) {
 		$sqx = $sq.clone();
@@ -180,7 +180,8 @@ $(function() {
 
 	$body.on("keydown", function(e){
 		var key = e.which;
-		// console.log(key);
+		console.log(key);
+		var $sel = $(".sel");
 		if (e.ctrlKey) { // ctrl
 			if (key === 90) {
 				$.undone("undo"); // z
@@ -190,7 +191,7 @@ $(function() {
 		if (key == 32) $("#options").fadeToggle("fast"); // space
 		if (key == 77) selecting = selecting ? false : true; // m
 		if (key == 78) { // n
-			$(".sel").removeClass("sel");
+			$sel.removeClass("sel");
 			$select_box.remove();
 		}
 		if (key == 71) { // g
@@ -201,7 +202,10 @@ $(function() {
 			}
 		}
 		if (key == 46) { // del
-			$(".sel").removeAttr("style");
+			$sel.removeAttr("style");
+		}
+		if (key == 70) { // f
+			$sel.attr("style", "background:" + hex);
 		}
 	});
 
