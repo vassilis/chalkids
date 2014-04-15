@@ -130,7 +130,7 @@ $(function() {
 	}
 
 	$body.append($container.clone().addClass("main"));
-	$body.append($container.clone().addClass("grid"));
+	$(".grid").append($container.clone());
 
 
 	// events
