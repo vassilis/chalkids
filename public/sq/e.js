@@ -80,24 +80,24 @@ $(function() {
 	window.$body = $("body");
 
 	var $options = $("#options");
-	var $del = $('<div class="color del"></div>');
+	var $del = $('<div><div class="color del"></div></div>');
 	var colors = [
-		"#000","#111","#222","#333","#444","#555",
-		"#666","#777","#888","#999","#AAA","#BBB",
-		"#CCC","#DDD","#EEE","#FFF",
+		"#000","#111","#222","#333","#444","#555","#666","#777","#888","#999","#AAA","#BBB","#CCC","#DDD","#EEE","#FFF",
+		"#F00","#F11","#F22","#F33","#F44","#F55","#F66","#F77","#F88","#F99","#FAA","#FBB","#FCC","#FDD","#FEE","#FFF",
+		"#0C0","#1C1","#2C2","#3C3","#4C4","#5C5","#6C6","#7C7","#8C8","#9C9","#ACA","#BCB","#CCC","#DCD","#ECE","#FFF",
+		"#00F","#11F","#22F","#33F","#44F","#55F","#66F","#77F","#88F","#99F","#AAF","#BBF","#CCF","#DDF","#EEF","#FFF",
 		"#371A48","#532B71","#C3A3E6","#CBBDCA",
 		"#D57CAC","#FF3577","#FEA597","#AD0747","#810253","#B0CC92",
 		"#D3D5C0","#C8EE87","#EEF207","#FFF07F",
 		"#FEAE01","#F13F01","#D20607","#C6D8DC",
 		"#A9B2B7","#D5BDA5",
 		"#8E9A76","#4F5A3A","#7F5E3D","#F16A56",
-		"#1F1F41","#2C3E56","#61667C","#7099AF","#5D3DC4","#0084C2",
+		"#2C3E56","#61667C","#7099AF","#0084C2",
 		"#0EC8BB","#009A66","#375659"
 	]
 	$colors = $("<div id='colors'></div>");
 	for (i=0;i<colors.length;i++){
-		var $color = $('<div class="color"></div>');
-		$color.css("background-color", colors[i]);
+		var $color = $('<div><div class="color" style="background:'+colors[i]+'"></div></div>');
 		$colors.append($color);
 	}
 	$colors.append($del);
@@ -219,7 +219,8 @@ $(function() {
 		var color = $el.css("background-color");
 		switch (target) {
 			case "brush":
-				$el.addClass("active").siblings().removeClass("active");
+				$(".color").removeClass("active");
+				$el.addClass("active");
 				if ($el.hasClass("del")) {
 					clearing = true;
 				} else {
