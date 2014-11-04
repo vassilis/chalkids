@@ -57,6 +57,8 @@ header {
 	font: 1.2em/1 sans-serif;
 }
 
+$img: "http://fc07.deviantart.net/fs70/i/2012/022/0/6/angry_birds_seasons_ipad_background_by_sal9-d4n8lne.jpg";
+
 #container {
 	// background: url('winnie1.jpg') #FFF;
 	background: #FFF;
@@ -75,7 +77,7 @@ header {
 		color: $green;
 		background-color: $green;
 		font: 4em/180px 'Chewy', cursive;
-		background-image: url('beyblade-1.jpg');
+		background-image: url($img);
 		@include opacity(0.7);
 		@include border-radius(7px);
 		@include text-stroke(white);
@@ -83,7 +85,7 @@ header {
 		@include transition-duration(0.3s);
 	}
 	&.completed {
-		background: url('beyblade-1.jpg') #FFF;
+		background: url($img) #FFF;
 		div {
 			@include opacity(0);
 		}

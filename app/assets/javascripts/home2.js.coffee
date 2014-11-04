@@ -9,7 +9,7 @@ $ ->
 
 	for i in [0..tiles-1]
 		n = nums[i].toString()
-		$container.append('<div class="item">' + n + '</div>')
+		$container.append('<div class="item" data-n="' + n + '"></div>')
 
 	$container.css
 		height: $container.height()
@@ -24,7 +24,7 @@ $ ->
 
 	$items.each ->
 		$el = $(this)
-		$target = $items.eq(eval($el.text()) - 1)
+		$target = $items.eq(eval($el.attr("data-n")) - 1)
 		# hue = Math.floor(Math.random() * 360)
 		$el.css
 			position: 'absolute'
@@ -32,7 +32,7 @@ $ ->
 			top: $el.attr('data-y') + 'px'
 			# 'background-color':  "hsl(" + hue + ", 60%, 50%)"
 			'background-position': '-' + $target.attr('data-x') + 'px -' + $target.attr('data-y') + 'px'
-		if eval($el.text()) == $el.index() + 1
+		if eval($el.attr("data-n")) == $el.index() + 1
 			$el.text('').addClass('checked').css('opacity', 1)
 
 
@@ -78,11 +78,11 @@ $ ->
 				else
 					$item2.appendTo $item2.parent()
 
-				if eval($item1.text()) == $item1.index() + 1
+				if eval($item1.attr("data-n")) == $item1.index() + 1
 					$item1.text('').addClass('checked').css('opacity', 1)
 					.droppable( "destroy" )
 					.draggable( "destroy" )
-				if eval($item2.text()) == $item2.index() + 1
+				if eval($item2.attr("data-n")) == $item2.index() + 1
 					$item2.text('').addClass('checked').css('opacity', 1)
 					.droppable( "destroy" )
 					.draggable( "destroy" )
