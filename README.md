@@ -1,33 +1,40 @@
 Chalkids
 ========
 
-Puzzles - Sudoku
+##Puzzles - Sudoku
+
 - http://krazydad.com/
 - 
 
-Coloring Pages
+##Coloring Pages
+
 - http://www.coloring-book.info/coloring/
 - 
 
-Drawing Online
+##Drawing Online
+
 - http://www.ζωγραφίζω.com/
 - 
 
-Printable Games
+##Printable Games
+
 - http://www.education.com/worksheets/games/
 - 
 
-Preschool
+##Preschool
+
 - http://www.education.com/worksheets/preschool/
 - 
 
-Παραμύθια
+##Παραμύθια
+
 - http://www.paidika.gr/
 - http://www.paramithia.net/
 - http://www.paramithia-gia-paidia.gr/
 - 
 
-Παιδικό Ραδιόφωνο
+##Παιδικό Ραδιόφωνο
+
 - http://babyradio.gr/
 - 
 
