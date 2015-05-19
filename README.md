@@ -3,8 +3,8 @@ Chalkids
 
 ##Puzzles - Sudoku
 
-- http://krazydad.com/
-- 
+- http://krazydad.com/  
+
 
 ##Coloring Pages
 
